@@ -1,10 +1,7 @@
-"""Tools for analyzis of the distribution of tokens in the SMILES dataset
-"""
+"""Tools for analyzis of the distribution of tokens in the SMILES dataset"""
+
 from collections import defaultdict
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Tuple
+from typing import Any, Dict, List, Tuple
 
 from pysmilesutils.tokenize import SMILESTokenizer
 
@@ -37,7 +34,9 @@ def analyze_smiles_tokens(
             token_frequency_d[token] += 1
 
     num_tokens: Tuple[Tuple[Any, ...], ...] = tuple(zip(*sorted(num_tokens_d.items())))
-    token_frequency: Tuple[Tuple[Any, ...], ...] = tuple(zip(*sorted(token_frequency_d.items())))
+    token_frequency: Tuple[Tuple[Any, ...], ...] = tuple(
+        zip(*sorted(token_frequency_d.items()))
+    )
     avg_num_tokens: float = sum(token_frequency[1]) / len(smiles)
     max_num_tokens: int = max(map(len, smiles))
     avg_num_characters: float = sum(map(len, smiles)) / len(smiles)

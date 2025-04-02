@@ -1,32 +1,23 @@
-"""Data utility classes for PyTorch datasets.
-"""
+"""Data utility classes for PyTorch datasets."""
+
 import math
 import os
 import pickle
 import random
-from itertools import count
-from itertools import cycle
-from typing import Any
-from typing import Callable
-from typing import List
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Union
-from typing import Iterator
-from typing import Sized
+from itertools import count, cycle
+from typing import Any, Callable, Iterator, List, Optional, Sequence, Tuple, Union
 
-import torch
 import numpy as np
+import torch
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import (
-    Dataset,
-    DataLoader,
-    Sampler,
     BatchSampler,
-    SubsetRandomSampler,
+    DataLoader,
+    Dataset,
     RandomSampler,
+    Sampler,
     SequentialSampler,
+    SubsetRandomSampler,
 )
 from torch.utils.data.dataloader import default_collate
 
@@ -340,7 +331,7 @@ class BlockDataLoader(DataLoader):
         drop_last_batch: bool = False,
         drop_last_block: bool = False,
         collate_fn: Optional[Callable] = None,
-        **kwargs
+        **kwargs,
     ) -> None:
         self.inner_batch_size = batch_size
         self.drop_last_batch = drop_last_batch
@@ -561,7 +552,7 @@ class ChunkBatchSampler(BatchSampler):
         drop_last: bool,
         i_chunk: int = 0,
         n_chunks: int = 1,
-        **kwargs
+        **kwargs,
     ) -> None:
         """
         A sampler which only samples a specific chunk of batches.

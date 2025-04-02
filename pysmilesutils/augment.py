@@ -1,12 +1,8 @@
-# -*- coding: utf-8 -*-
-"""Classes for data augmentation of SMILES.
-"""
+"""Classes for data augmentation of SMILES."""
+
 from abc import abstractmethod
 from random import shuffle
-from typing import Any
-from typing import Iterable
-from typing import List
-from typing import Union
+from typing import Any, Iterable, List, Union
 
 import numpy as np
 from rdkit import Chem
@@ -99,7 +95,7 @@ class MolAugmenter(Augmenter):
 class SMILESAugmenter(MolAugmenter):
     """An augmenter that produces Augmented SMILES. (aka. SMILES enumeration/SMILES Randomization)
 
-    The ´SMILESAugmenter` can use either an unrestricted or a restricted scheme.
+    The `SMILESAugmenter` can use either an unrestricted or a restricted scheme.
     In the former case the `rdkit` SMILES augmentation is used, and in
     the later the atom order in the RDKit molecule is randomized before producing the
     non-canonical SMILES. The unrestricted provides more SMILES per molecule, but also contains
@@ -135,7 +131,9 @@ class SMILESAugmenter(MolAugmenter):
             mols: List[Mol] = list(map(Chem.MolFromSmiles, smi.split(".")))
             for _ in range(3):
                 try:
-                    smi_new: List[str] = [Chem.MolToSmiles(mol, doRandom=True) for mol in mols]
+                    smi_new: List[str] = [
+                        Chem.MolToSmiles(mol, doRandom=True) for mol in mols
+                    ]
                     shuffle(smi_new)
                     smiles_aug.append(".".join(smi_new))
                     break
@@ -143,8 +141,10 @@ class SMILESAugmenter(MolAugmenter):
                     print(f"Augmentation failed for {smi} with error: {e}")
             else:
                 smiles_aug.append(smi)
-                print(f"Augmentation failed three times for {smi}, returning unaugmented original")
-                
+                print(
+                    f"Augmentation failed three times for {smi}, returning unaugmented original"
+                )
+
         return smiles_aug
 
     def augment_smiles_restricted(self, smiles: Iterable[str]) -> List[str]:
@@ -168,7 +168,7 @@ class SMILESAugmenter(MolAugmenter):
             if augment_prob < np.random.rand():
                 smiles_aug.append(smi)
                 continue
-            
+
             mol: Mol = Chem.MolFromSmiles(smi)
             for _ in range(3):
                 try:
@@ -179,7 +179,9 @@ class SMILESAugmenter(MolAugmenter):
                     print(f"Augmentation failed for {smi} with error: {e}")
             else:
                 smiles_aug.append(smi)
-                print(f"Augmentation failed three times for {smi}, returning unaugmented original")
+                print(
+                    f"Augmentation failed three times for {smi}, returning unaugmented original"
+                )
 
         self.augment_prob = augment_prob
         return smiles_aug

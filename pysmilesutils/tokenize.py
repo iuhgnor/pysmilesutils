@@ -1,15 +1,10 @@
-"""SMILES Tokenizer module.
-"""
-import re
+"""SMILES Tokenizer module."""
+
 import json
+import re
 import warnings
 from re import Pattern
-from typing import Dict
-from typing import Iterator
-from typing import List
-from typing import Optional
-from typing import Union
-from typing import Any
+from typing import Any, Dict, Iterator, List, Optional, Union
 
 import torch
 
